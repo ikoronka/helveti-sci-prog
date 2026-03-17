@@ -7,7 +7,7 @@
   "cells": [
     {
       "id": "Hbol",
-      "code_hash": "a47a7dd5aaa2268aa62626b94f554b8a",
+      "code_hash": "75950da9c640640baf144d2eb4a78948",
       "outputs": [
         {
           "type": "data",
@@ -33,7 +33,7 @@
     },
     {
       "id": "vblA",
-      "code_hash": "ed32cdfe0b18173cb3551ebbffcb3564",
+      "code_hash": "33c9796d5df8c18aa1f9ac3971b527d8",
       "outputs": [
         {
           "type": "data",
@@ -46,7 +46,7 @@
     },
     {
       "id": "bkHC",
-      "code_hash": "fc8a105fb0f74c164eb3779d387c09de",
+      "code_hash": "e4d1fc81dbdd267d97a6f4bbb412ef0e",
       "outputs": [
         {
           "type": "data",
@@ -62,102 +62,127 @@
       "code_hash": "eb1d276f6939814600f81cb89b029d76",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "name 'marimo' is not defined",
-          "traceback": []
+          "type": "data",
+          "data": {
+            "text/html": "<div style='display: flex;flex: 1;flex-direction: row;justify-content: space-between;align-items: normal;flex-wrap: nowrap;gap: 0.5rem'><marimo-ui-element object-id='lEQa-0' random-id='ee3b0f7f-8764-e9cb-1339-e08728e4f69a'><marimo-dropdown data-initial-value='[&quot;Winterthur&quot;]' data-label='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Destination Station&lt;/span&gt;&lt;/span&gt;&quot;' data-options='[&quot;Winterthur&quot;,&quot;Zurich Oerlikon&quot;,&quot;Zug&quot;,&quot;Baden&quot;,&quot;Uster&quot;]' data-allow-select-none='false' data-searchable='false' data-full-width='false'></marimo-dropdown></marimo-ui-element><marimo-ui-element object-id='lEQa-1' random-id='01ea6966-1b51-2b4a-e3df-897f81e8cb54'><marimo-slider data-initial-value='2' data-label='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Maximum Transfers&lt;/span&gt;&lt;/span&gt;&quot;' data-start='0' data-stop='4' data-step='1' data-steps='[]' data-debounce='false' data-disabled='false' data-orientation='&quot;horizontal&quot;' data-show-value='false' data-include-input='false' data-full-width='false'></marimo-slider></marimo-ui-element></div>"
+          }
         }
       ],
-      "console": [
-        {
-          "type": "stream",
-          "name": "stderr",
-          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;/var/folders/3y/13z88yyj5fb1b_n_mfzc6yqr0000gn/T/marimo_59643/__marimo__cell_lEQa_.py&quot;</span>, line <span class=\"m\">1</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"n\">marimo</span><span class=\"o\">.</span><span class=\"n\">md</span><span class=\"p\">(</span><span class=\"s2\">&quot;## Zurich Commuting and Delay Analyzer&quot;</span><span class=\"p\">)</span>\n<span class=\"w\">    </span><span class=\"pm\">^^^^^^</span>\n<span class=\"gr\">NameError</span>: <span class=\"n\">name &#39;marimo&#39; is not defined</span>\n</pre></div>\n</span>",
-          "mimetype": "application/vnd.marimo+traceback"
-        }
-      ]
+      "console": []
     },
     {
       "id": "PKri",
-      "code_hash": "e4739a9ba926f5e7d45bbd18b2f5df22",
+      "code_hash": "4d5516b16a2aac03b3a20f7f8146362f",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "asyncio.run() cannot be called from a running event loop",
-          "traceback": []
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
         }
       ],
-      "console": [
-        {
-          "type": "stream",
-          "name": "stderr",
-          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">&quot;/var/folders/3y/13z88yyj5fb1b_n_mfzc6yqr0000gn/T/marimo_59643/__marimo__cell_PKri_.py&quot;</span>, line <span class=\"m\">1</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"n\">payloads</span> <span class=\"o\">=</span> <span class=\"n\">asyncio</span><span class=\"o\">.</span><span class=\"n\">run</span><span class=\"p\">(</span>\n<span class=\"w\">    </span>    <span class=\"n\">fetch_for_destinations</span><span class=\"p\">(</span><span class=\"n\">ORIGIN_STATION</span><span class=\"p\">,</span> <span class=\"n\">HUB_DESTINATIONS</span><span class=\"p\">,</span> <span class=\"n\">limit</span><span class=\"o\">=</span><span class=\"mi\">30</span><span class=\"p\">)</span>\n<span class=\"w\">    </span><span class=\"p\">)</span>\n  File <span class=\"nb\">&quot;/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py&quot;</span>, line <span class=\"m\">200</span>, in <span class=\"n\">run</span>\n<span class=\"w\">    </span><span class=\"k\">raise</span> <span class=\"ne\">RuntimeError</span><span class=\"p\">(</span>\n<span class=\"w\">    </span>    <span class=\"s2\">&quot;asyncio.run() cannot be called from a running event loop&quot;</span><span class=\"p\">)</span>\n<span class=\"gr\">RuntimeError</span>: <span class=\"n\">asyncio.run() cannot be called from a running event loop</span>\n</pre></div>\n</span>",
-          "mimetype": "application/vnd.marimo+traceback"
-        }
-      ]
+      "console": []
     },
     {
       "id": "Xref",
-      "code_hash": "8dabb7bb14f1b7697e0eeff2f907fbe2",
+      "code_hash": "abd0441fd72bdb7ed2fa1b73948082a6",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (RuntimeError): ",
-          "traceback": []
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
         }
       ],
       "console": []
     },
     {
       "id": "SFPL",
-      "code_hash": "94daaa314782a3a221fd5339d4e4e8d9",
+      "code_hash": "8dabb7bb14f1b7697e0eeff2f907fbe2",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (RuntimeError): ",
-          "traceback": []
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
         }
       ],
       "console": []
     },
     {
       "id": "BYtC",
-      "code_hash": "9bb30a6b97a8b183f81a9fec0095e5cc",
+      "code_hash": "94daaa314782a3a221fd5339d4e4e8d9",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (RuntimeError): ",
-          "traceback": []
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
         }
       ],
       "console": []
     },
     {
       "id": "RGSE",
-      "code_hash": "b828dc98bedf43db22b12b26d1787806",
+      "code_hash": "9bb30a6b97a8b183f81a9fec0095e5cc",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (RuntimeError): ",
-          "traceback": []
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
         }
       ],
       "console": []
     },
     {
       "id": "Kclp",
+      "code_hash": "7f5f3503eb8fed845a4e7541b9728554",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "emfo",
       "code_hash": "0222cea1f70671468a870898d9ace1fc",
       "outputs": [
         {
-          "type": "error",
-          "ename": "exception",
-          "evalue": "An ancestor raised an exception (RuntimeError): ",
-          "traceback": []
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='emfo-0' random-id='43125f29-aab6-f80f-0241-a731b24cc21e'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[]&quot;' data-total-rows='0' data-total-columns='8' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;route_from&quot;,[&quot;string&quot;,&quot;object&quot;]],[&quot;route_to&quot;,[&quot;string&quot;,&quot;object&quot;]],[&quot;departure_scheduled&quot;,[&quot;string&quot;,&quot;object&quot;]],[&quot;arrival_scheduled&quot;,[&quot;string&quot;,&quot;object&quot;]],[&quot;transfers&quot;,[&quot;string&quot;,&quot;object&quot;]],[&quot;delay_minutes&quot;,[&quot;string&quot;,&quot;object&quot;]],[&quot;is_peak_hour&quot;,[&quot;string&quot;,&quot;object&quot;]],[&quot;day_of_week&quot;,[&quot;string&quot;,&quot;object&quot;]]]' data-selection='&quot;multi&quot;' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-has-stable-row-id='true' data-lazy='false' data-preload='false' data-download-file-name='&quot;download&quot;'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "1c14ee682f481ded738ec8c52ab9a58f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='Hstk-0' random-id='816e39ae-c330-9968-934e-9d20d240ca20'><marimo-slider data-initial-value='14' data-label='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Max delay (minutes)&lt;/span&gt;&lt;/span&gt;&quot;' data-start='0' data-stop='20' data-step='1' data-steps='[]' data-debounce='false' data-disabled='false' data-orientation='&quot;horizontal&quot;' data-show-value='false' data-include-input='false' data-full-width='false'></marimo-slider></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "7f93b168067eab33b032b6d63371adcf",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<div style='display: flex;flex: 1;flex-direction: column;justify-content: flex-start;align-items: normal;flex-wrap: nowrap;gap: 0.5rem'><marimo-ui-element object-id='Hstk-0' random-id='816e39ae-c330-9968-934e-9d20d240ca20'><marimo-slider data-initial-value='14' data-label='&quot;&lt;span class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&gt;&lt;span class=&#92;&quot;paragraph&#92;&quot;&gt;Max delay (minutes)&lt;/span&gt;&lt;/span&gt;&quot;' data-start='0' data-stop='20' data-step='1' data-steps='[]' data-debounce='false' data-disabled='false' data-orientation='&quot;horizontal&quot;' data-show-value='false' data-include-input='false' data-full-width='false'></marimo-slider></marimo-ui-element><marimo-mime-renderer data-mime='&quot;application/vnd.vegalite.v6+json&quot;' data-data='&quot;{&#92;n  &#92;&quot;&#36;schema&#92;&quot;: &#92;&quot;https://vega.github.io/schema/vega-lite/v6.1.0.json&#92;&quot;,&#92;n  &#92;&quot;config&#92;&quot;: {&#92;n    &#92;&quot;view&#92;&quot;: {&#92;n      &#92;&quot;continuousHeight&#92;&quot;: 300,&#92;n      &#92;&quot;continuousWidth&#92;&quot;: 300&#92;n    }&#92;n  },&#92;n  &#92;&quot;data&#92;&quot;: {&#92;n    &#92;&quot;name&#92;&quot;: &#92;&quot;data-e40b272809d24782e35307916a540e97&#92;&quot;&#92;n  },&#92;n  &#92;&quot;datasets&#92;&quot;: {&#92;n    &#92;&quot;data-e40b272809d24782e35307916a540e97&#92;&quot;: [&#92;n      {&#92;n        &#92;&quot;delay_minutes&#92;&quot;: 2,&#92;n        &#92;&quot;route&#92;&quot;: &#92;&quot;Zurich HB &#92;&#92;u2192 Winterthur&#92;&quot;,&#92;n        &#92;&quot;time&#92;&quot;: &#92;&quot;07:12&#92;&quot;&#92;n      },&#92;n      {&#92;n        &#92;&quot;delay_minutes&#92;&quot;: 5,&#92;n        &#92;&quot;route&#92;&quot;: &#92;&quot;Zurich HB &#92;&#92;u2192 Winterthur&#92;&quot;,&#92;n        &#92;&quot;time&#92;&quot;: &#92;&quot;07:42&#92;&quot;&#92;n      },&#92;n      {&#92;n        &#92;&quot;delay_minutes&#92;&quot;: 8,&#92;n        &#92;&quot;route&#92;&quot;: &#92;&quot;Zurich HB &#92;&#92;u2192 Winterthur&#92;&quot;,&#92;n        &#92;&quot;time&#92;&quot;: &#92;&quot;08:12&#92;&quot;&#92;n      },&#92;n      {&#92;n        &#92;&quot;delay_minutes&#92;&quot;: 11,&#92;n        &#92;&quot;route&#92;&quot;: &#92;&quot;Zurich HB &#92;&#92;u2192 Winterthur&#92;&quot;,&#92;n        &#92;&quot;time&#92;&quot;: &#92;&quot;08:42&#92;&quot;&#92;n      }&#92;n    ]&#92;n  },&#92;n  &#92;&quot;encoding&#92;&quot;: {&#92;n    &#92;&quot;tooltip&#92;&quot;: [&#92;n      {&#92;n        &#92;&quot;field&#92;&quot;: &#92;&quot;route&#92;&quot;,&#92;n        &#92;&quot;type&#92;&quot;: &#92;&quot;nominal&#92;&quot;&#92;n      },&#92;n      {&#92;n        &#92;&quot;field&#92;&quot;: &#92;&quot;time&#92;&quot;,&#92;n        &#92;&quot;type&#92;&quot;: &#92;&quot;nominal&#92;&quot;&#92;n      },&#92;n      {&#92;n        &#92;&quot;field&#92;&quot;: &#92;&quot;delay_minutes&#92;&quot;,&#92;n        &#92;&quot;type&#92;&quot;: &#92;&quot;quantitative&#92;&quot;&#92;n      }&#92;n    ],&#92;n    &#92;&quot;x&#92;&quot;: {&#92;n      &#92;&quot;field&#92;&quot;: &#92;&quot;time&#92;&quot;,&#92;n      &#92;&quot;title&#92;&quot;: &#92;&quot;Time&#92;&quot;,&#92;n      &#92;&quot;type&#92;&quot;: &#92;&quot;nominal&#92;&quot;&#92;n    },&#92;n    &#92;&quot;y&#92;&quot;: {&#92;n      &#92;&quot;field&#92;&quot;: &#92;&quot;delay_minutes&#92;&quot;,&#92;n      &#92;&quot;title&#92;&quot;: &#92;&quot;Delay (minutes)&#92;&quot;,&#92;n      &#92;&quot;type&#92;&quot;: &#92;&quot;quantitative&#92;&quot;&#92;n    }&#92;n  },&#92;n  &#92;&quot;height&#92;&quot;: 280,&#92;n  &#92;&quot;mark&#92;&quot;: {&#92;n    &#92;&quot;type&#92;&quot;: &#92;&quot;bar&#92;&quot;&#92;n  },&#92;n  &#92;&quot;usermeta&#92;&quot;: {&#92;n    &#92;&quot;embedOptions&#92;&quot;: {}&#92;n  }&#92;n}&quot;'></marimo-mime-renderer><marimo-ui-element object-id='nWHF-0' random-id='b6e798ae-7157-f3be-467a-3e3fb2d089fe'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;_marimo_row_id&#92;&quot;:0,&#92;&quot;route&#92;&quot;:&#92;&quot;Zurich HB &#92;&#92;u2192 Winterthur&#92;&quot;,&#92;&quot;delay_minutes&#92;&quot;:2,&#92;&quot;time&#92;&quot;:&#92;&quot;07:12&#92;&quot;},{&#92;&quot;_marimo_row_id&#92;&quot;:1,&#92;&quot;route&#92;&quot;:&#92;&quot;Zurich HB &#92;&#92;u2192 Winterthur&#92;&quot;,&#92;&quot;delay_minutes&#92;&quot;:5,&#92;&quot;time&#92;&quot;:&#92;&quot;07:42&#92;&quot;},{&#92;&quot;_marimo_row_id&#92;&quot;:2,&#92;&quot;route&#92;&quot;:&#92;&quot;Zurich HB &#92;&#92;u2192 Winterthur&#92;&quot;,&#92;&quot;delay_minutes&#92;&quot;:8,&#92;&quot;time&#92;&quot;:&#92;&quot;08:12&#92;&quot;},{&#92;&quot;_marimo_row_id&#92;&quot;:3,&#92;&quot;route&#92;&quot;:&#92;&quot;Zurich HB &#92;&#92;u2192 Winterthur&#92;&quot;,&#92;&quot;delay_minutes&#92;&quot;:11,&#92;&quot;time&#92;&quot;:&#92;&quot;08:42&#92;&quot;}]&quot;' data-total-rows='4' data-total-columns='3' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='false' data-page-size='10' data-field-types='[[&quot;route&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;delay_minutes&quot;,[&quot;integer&quot;,&quot;int64&quot;]],[&quot;time&quot;,[&quot;string&quot;,&quot;str&quot;]]]' data-selection='&quot;multi&quot;' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-has-stable-row-id='true' data-lazy='false' data-preload='false' data-download-file-name='&quot;filtered_mock_data&quot;'></marimo-table></marimo-ui-element></div>"
+          }
         }
       ],
       "console": []

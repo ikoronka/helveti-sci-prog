@@ -11,9 +11,10 @@ def _():
 
     import altair as alt
     import httpx
+    import marimo
     import pandas as pd
 
-    return alt, asyncio, httpx, pd, time
+    return alt, asyncio, httpx, marimo, pd, time
 
 
 @app.cell
@@ -66,14 +67,21 @@ def _(BASE_URL, REQUEST_LIMIT, asyncio, httpx):
             if isinstance(result, Exception):
                 payloads.append(
                     {
-                        "from": from_station,
-                        "to": destination,
+                        "query_from": from_station,
+                        "query_to": destination,
                         "connections": [],
                         "error": str(result),
                     }
                 )
             else:
-                payloads.append(result)
+                payloads.append(
+                    {
+                        "query_from": from_station,
+                        "query_to": destination,
+                        "connections": result.get("connections", []),
+                        "error": None,
+                    }
+                )
         return payloads
 
     return fetch_for_destinations
@@ -104,8 +112,14 @@ def _(pd, time):
     def flatten_connections(payloads):
         rows: list[dict] = []
         for payload in payloads:
-            query = payload.get("from", "")
-            destination = payload.get("to", "")
+            query = payload.get("query_from", payload.get("from", ""))
+            destination = payload.get("query_to", payload.get("to", ""))
+
+            if isinstance(query, dict):
+                query = (query.get("station") or {}).get("name", "")
+            if isinstance(destination, dict):
+                destination = (destination.get("station") or {}).get("name", "")
+
             connections = payload.get("connections", [])
 
             for connection in connections:
@@ -208,7 +222,7 @@ def _(pd, time):
 
 
 @app.cell
-def _(HUB_DESTINATIONS, ORIGIN_STATION):
+def _(HUB_DESTINATIONS, ORIGIN_STATION, marimo):
     marimo.md("## Zurich Commuting and Delay Analyzer")
     destination_dropdown = marimo.ui.dropdown(
         options=HUB_DESTINATIONS,
@@ -227,12 +241,24 @@ def _(HUB_DESTINATIONS, ORIGIN_STATION):
 
 
 @app.cell
-def _(HUB_DESTINATIONS, ORIGIN_STATION, asyncio, fetch_for_destinations, flatten_connections):
-    payloads = asyncio.run(
-        fetch_for_destinations(ORIGIN_STATION, HUB_DESTINATIONS, limit=30)
+async def _(HUB_DESTINATIONS, ORIGIN_STATION, fetch_for_destinations, flatten_connections):
+    payloads = await fetch_for_destinations(
+        ORIGIN_STATION, HUB_DESTINATIONS, limit=30
     )
+    fetch_errors = [
+        f"{payload['query_to']}: {payload['error']}"
+        for payload in payloads
+        if payload.get("error")
+    ]
     all_connections = flatten_connections(payloads)
-    return all_connections
+    return all_connections, fetch_errors
+
+
+@app.cell
+def _(fetch_errors, marimo):
+    if fetch_errors:
+        marimo.md("### Data Fetch Warnings")
+        marimo.md("\\n".join([f"- {message}" for message in fetch_errors]))
 
 
 @app.cell
@@ -249,7 +275,7 @@ def _(selected_data, transfer_slider):
 
 
 @app.cell
-def _(alt, filtered_data):
+def _(alt, filtered_data, marimo):
     marimo.md("### Delay Distribution")
     if filtered_data.empty:
         marimo.md("No data available for the selected filters.")
@@ -270,14 +296,17 @@ def _(alt, filtered_data):
 
 
 @app.cell
-def _(filtered_data, most_reliable_connections):
+def _(filtered_data, marimo, most_reliable_connections):
     marimo.md("### Top 5 Most Reliable Connections")
     reliability_table = most_reliable_connections(filtered_data, top_n=5)
-    marimo.ui.table(reliability_table)
+    if reliability_table.empty:
+        marimo.md("No reliable connections found for the selected filters.")
+    else:
+        marimo.ui.table(reliability_table)
 
 
 @app.cell
-def _(filtered_data):
+def _(filtered_data, marimo):
     marimo.md("### Filtered Data Preview")
     marimo.ui.table(
         filtered_data[
@@ -293,6 +322,52 @@ def _(filtered_data):
             ]
         ].sort_values("departure_scheduled")
     )
+
+
+@app.cell
+def _(marimo, pd):
+    marimo.md("### Demo-Safe Mock Delay Chart")
+
+    mock_commute_data = pd.DataFrame(
+        [
+            {"route": "Zurich HB → Winterthur", "delay_minutes": 2, "time": "07:12"},
+            {"route": "Zurich HB → Winterthur", "delay_minutes": 5, "time": "07:42"},
+            {"route": "Zurich HB → Winterthur", "delay_minutes": 8, "time": "08:12"},
+            {"route": "Zurich HB → Winterthur", "delay_minutes": 11, "time": "08:42"},
+            {"route": "Zurich HB → Winterthur", "delay_minutes": 14, "time": "09:12"},
+        ]
+    )
+
+    max_delay = marimo.ui.slider(
+        start=0,
+        stop=20,
+        step=1,
+        value=14,
+        label="Max delay (minutes)",
+    )
+    max_delay
+
+    return max_delay, mock_commute_data
+
+
+@app.cell
+def _(alt, marimo, max_delay, mock_commute_data):
+    filtered_mock_data = mock_commute_data[
+        mock_commute_data["delay_minutes"] <= max_delay.value
+    ]
+
+    chart = (
+        alt.Chart(filtered_mock_data)
+        .mark_bar()
+        .encode(
+            x=alt.X("time:N", title="Time"),
+            y=alt.Y("delay_minutes:Q", title="Delay (minutes)"),
+            tooltip=["route:N", "time:N", "delay_minutes:Q"],
+        )
+        .properties(height=280)
+    )
+
+    marimo.vstack([max_delay, chart, marimo.ui.table(filtered_mock_data)])
 
 
 if __name__ == "__main__":
