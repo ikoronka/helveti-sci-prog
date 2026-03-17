@@ -1,6 +1,7 @@
 # Zurich Commuting and Delay Analyzer
 
 Analyze Swiss public transport reliability for Zurich-area commuting using the public API at transport.opendata.ch.
+https://transport.opendata.ch/docs.html
 
 ## 1) Quick start with uv
 
