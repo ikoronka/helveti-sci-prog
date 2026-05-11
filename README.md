@@ -1,66 +1,30 @@
-# Zurich Commuting and Delay Analyzer
+# Scientific House Rent Dashboard
 
-Analyze Swiss public transport reliability for Zurich-area commuting using the public API at transport.opendata.ch.
+This project is an MVP Scientific Programming dashboard designed to analyze the [House Rent Prediction Dataset](https://www.kaggle.com/datasets/iamsouravbanerjee/house-rent-prediction-dataset/data).
 
-## 1) Quick start with uv
+## Features
+- **Automated Data Pipeline:** Downloads the dataset directly from Kaggle and processes it into a local SQLite database.
+- **Interactive Dashboard:** Built with [Marimo](https://marimo.io/), featuring reactive filters for City and BHK (Bedroom, Hall, Kitchen).
+- **Statistical Analysis:** Performs regression and correlation analysis between Rent and Size using `scipy`.
+- **AI-Driven Insights:** Generates research conclusions based on your filtered analysis using Google Gemini.
 
-Initialize the project and dependencies:
+## Prerequisites
+- [uv](https://github.com/astral-sh/uv) (for package management)
+- A [Kaggle API Key](https://www.kaggle.com/settings)
+- A [Google Gemini API Key](https://aistudio.google.com/)
 
-```bash
-uv init .
-uv venv
-source .venv/bin/activate
-uv add marimo pandas httpx altair
-```
-
-If dependencies are already declared in `pyproject.toml`, install/sync them with:
-
-```bash
-uv sync
-```
-
-Run the reactive marimo notebook:
-
-```bash
-uv run marimo edit app.py
-```
-
-## 2) Data pipeline
-
-The analyzer follows this flow:
-
-1. **Fetch**
-   - Uses async `httpx.AsyncClient` requests to query `/v1/connections`.
-   - Pulls routes from `Zurich HB` to selected destinations (including `Winterthur` and other major hubs).
-
-2. **Flatten & Clean**
-   - Extracts nested fields from each connection:
-     - Scheduled times (`from.departure`, `to.arrival`)
-     - Prognosis times (`from.prognosis.departure`, `to.prognosis.arrival`)
-   - Converts timestamps to timezone-aware pandas datetimes.
-   - Handles missing prognosis data as on-time (0 delay).
-
-3. **Delay Metrics**
-   - Computes departure and arrival delay in minutes.
-   - Creates `delay_minutes` using arrival delay when available, otherwise departure delay.
-
-4. **Feature Engineering**
-   - Adds `is_peak_hour` (true for common commute windows).
-   - Adds `day_of_week` as an ordered categorical feature.
-
-5. **Reactive EDA**
-   - Filters by destination and max transfers via marimo UI controls.
-   - Renders an Altair histogram of delay distribution.
-   - Displays top 5 most reliable connections (lowest average delay).
-
-## 3) Expected initial EDA findings
-
-- Lower-transfer routes are typically more reliable than multi-transfer alternatives.
-- Peak-hour trips generally show wider delay spread.
-- The median delay should remain near 0 for many direct commuter segments.
-- Reliability rankings can differ by destination due to route complexity and transfer pressure.
-
-## 4) Project files
-
-- `app.py`: marimo reactive notebook app with modular API and transformation logic.
-- `pyproject.toml`: uv-managed project metadata and dependencies.
+## Setup
+1. **API Keys:**
+   - Place your `kaggle.json` in `~/.kaggle/kaggle.json`.
+   - Add your Google API key to your environment variables:
+     ```bash
+     export GOOGLE_API_KEY="your_api_key_here"
+     ```
+2. **Dependencies:**
+   ```bash
+   uv pip install -r requirements.txt
+   ```
+3. **Run the Dashboard:**
+   ```bash
+   marimo edit app.py
+   ```

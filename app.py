@@ -1,11 +1,11 @@
 import marimo
 
-__generated_with = "0.10.19"
+__generated_with = "0.21.0"
 app = marimo.App()
 
 
 @app.cell
-def __(mo):
+def _():
     import marimo as mo
     from db_handler import HouseRentDatabase
     import pandas as pd
@@ -16,12 +16,16 @@ def __(mo):
 
     db = HouseRentDatabase()
     df = db.get_data()
-    return LLMService, db, df, mo, pd, plt, sns, stats
+    return LLMService, df, mo, plt, sns, stats
 
 
 @app.cell
-def __(df, mo):
-    mo.md("# 🏠 Scientific House Rent Dashboard")
+def _(df, mo):
+    mo.vstack([
+        mo.md("# 🏠 Scientific House Rent Dashboard"),
+        mo.md("### What is BHK?"),
+        mo.md("BHK stands for **Bedroom, Hall, and Kitchen**...")
+    ])
 
     city_select = mo.ui.dropdown(
         options=df["City"].unique().tolist(),
@@ -35,11 +39,12 @@ def __(df, mo):
     # Define sidebar
     sidebar = mo.sidebar([mo.md("## Filters"), city_select, bhk_slider])
 
-    return bhk_slider, city_select, sidebar
+    sidebar
+    return bhk_slider, city_select
 
 
 @app.cell
-def __(bhk_slider, city_select, df, mo, plt, sns, stats):
+def _(bhk_slider, city_select, df, mo, plt, sns, stats):
     filtered_df = df[
         (df["City"] == city_select.value) & (df["BHK"] == bhk_slider.value)
     ]
@@ -77,19 +82,19 @@ def __(bhk_slider, city_select, df, mo, plt, sns, stats):
             ),
         ]
     )
-    return ax1, fig1, intercept, kpi_row, p_value, r_value, slope, std_err
+    return p_value, r_value
 
 
 @app.cell
-def __(LLMService, mo, p_value, r_value, slope):
+def _(LLMService, mo, p_value, r_value):
     llm = LLMService()
     conclusion = llm.generate_conclusion(r_value, p_value)
     mo.md(f"## 🧠 Research Conclusion\n{conclusion}")
-    return conclusion, llm
+    return
 
 
 @app.cell
-def __(df, mo):
+def _(df, mo):
     mo.md("## 📊 Data Preview")
     mo.ui.table(df)
     return

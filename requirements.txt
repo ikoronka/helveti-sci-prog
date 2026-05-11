@@ -3,5 +3,5 @@ seaborn
 matplotlib
 scipy
 marimo
-ollama
+google-generativeai
 kagglehub
