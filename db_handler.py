@@ -1,3 +1,23 @@
+"""
+db_handler.py
+
+This module handles the data pipeline for the Scientific House Rent Dashboard.
+
+Main responsibilities:
+1. Download the real-world house rent dataset from Kaggle.
+2. Clean the raw dataset before analysis.
+3. Store the cleaned data in a local SQLite database.
+4. Load the cleaned data back into pandas for the dashboard.
+
+Rubric relevance:
+- Collection of real-world data
+- Data preparation using regular expressions
+- Use of pandas DataFrames
+- Use of a database, SQLite
+- Use of SQL queries in Python code
+- Procedural and object-oriented programming
+"""
+
 import pandas as pd
 import sqlite3
 import re

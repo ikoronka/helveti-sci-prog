@@ -39,6 +39,27 @@ def _():
         variance_inflation_factor,
     )
 
+@app.cell
+def _(mo):
+    mo.md("""
+    ## Project Setup and Data Loading
+
+    This section imports the main libraries used in the project and loads the house rent dataset.
+
+    The project uses:
+
+    - `pandas` and `numpy` for data handling and numerical calculations
+    - `seaborn` and `matplotlib` for data visualization
+    - `scipy.stats` for statistical testing and regression analysis
+    - `sklearn` for outlier detection and data transformation
+    - `statsmodels` for multicollinearity checks using VIF
+    - `HouseRentDatabase` to download, clean, store, and retrieve the dataset
+    - `LLMService` to generate an AI-supported interpretation of statistical results
+
+    This part supports the Scientific Programming requirement because it combines real-world data,
+    data processing, visualizations, statistics, a database, and an LLM-based analysis component.
+    """)
+    return
 
 @app.cell
 def _(df, mo):
@@ -63,6 +84,25 @@ def _(df, mo):
     sidebar
     return bhk_slider, city_select
 
+@app.cell
+def _(mo):
+    mo.md("""
+    ## Interactive Dashboard Controls
+
+    This section creates interactive controls for the dashboard.
+
+    The user can filter the dataset by:
+
+    - `City`
+    - `BHK`, meaning Bedroom, Hall, and Kitchen
+
+    These controls make the dashboard interactive and allow users to explore how rent changes
+    across different cities and apartment types.
+
+    This supports the web application requirement because the analysis is not only static;
+    users can interact with the data and immediately see updated results.
+    """)
+    return
 
 @app.cell
 def _(bhk_slider, city_select, df, mo, plt, sns, stats):
@@ -105,6 +145,33 @@ def _(bhk_slider, city_select, df, mo, plt, sns, stats):
     )
     return p_value, r_value
 
+@app.cell
+def _(mo):
+    mo.md("""
+    ## Main Exploratory Analysis and Regression
+
+    This section shows the main dashboard outputs for the selected city and BHK value.
+
+    It includes:
+
+    - Average rent
+    - Median apartment size
+    - Number of matching apartments
+    - A rent distribution histogram
+    - A regression plot of `Rent` versus `Size`
+    - A statistical regression result with slope, R-squared, and p-value
+
+    The p-value is especially important because the assignment requires a statistical analysis
+    that includes a p-value.
+
+    The regression answers the research question:
+
+    **Is apartment size significantly associated with rent?**
+
+    A small p-value suggests that apartment size has a statistically significant relationship
+    with rent in the selected filtered data.
+    """)
+    return
 
 @app.cell
 def _(LLMService, mo, p_value, r_value):
@@ -113,6 +180,28 @@ def _(LLMService, mo, p_value, r_value):
     mo.md(f"## 🧠 Research Conclusion\n{conclusion}")
     return
 
+@app.cell
+def _(mo):
+    mo.md("""
+    ## LLM-Supported Interpretation
+
+    This section sends the statistical result to a Large Language Model.
+
+    The LLM receives:
+
+    - The correlation value between apartment size and rent
+    - The p-value from the regression analysis
+
+    It then generates a short scientific interpretation of the result.
+
+    This supports the additional project requirement:
+
+    **Use of a Large Language Model to support data preparation and/or data analysis.**
+
+    The LLM is not used to replace the statistical test. Instead, it helps explain the result
+    in clearer language for the dashboard user.
+    """)
+    return
 
 @app.cell
 def _(df, mo):
@@ -120,6 +209,23 @@ def _(df, mo):
     mo.ui.table(df)
     return
 
+@app.cell
+def _(mo):
+    mo.md("""
+    ## Data Preview
+
+    This table displays the cleaned dataset loaded from the SQLite database.
+
+    Showing the raw data is useful because it allows users to inspect:
+
+    - Column names
+    - Data types
+    - Example rows
+    - Whether the dataset loaded correctly
+
+    This supports the requirement for using tables in data exploration.
+    """)
+    return
 
 @app.cell
 def _(mo):
@@ -133,6 +239,7 @@ def _(mo):
     and runs formal statistical tests so the regression in the dashboard above rests on solid ground.
     """)
     return
+
 
 
 @app.cell
@@ -165,6 +272,29 @@ def _(df, mo, np):
     ])
     return
 
+@app.cell
+def _(mo):
+    mo.md("""
+    ## Data Integrity Check
+
+    This section checks the quality of the dataset before deeper analysis.
+
+    It calculates:
+
+    - Number of rows and columns
+    - Number of missing cells
+    - Number of duplicate rows
+    - Summary statistics for numerical variables
+    - Skewness
+    - Kurtosis
+
+    Skewness and kurtosis are useful because rent data is often not normally distributed.
+    If the rent variable is strongly skewed, transformations such as `log_Rent` or
+    Yeo-Johnson transformation may produce a better statistical analysis.
+
+    This section supports the data preparation and exploratory data analysis requirements.
+    """)
+    return
 
 @app.cell
 def _(mo):
@@ -204,6 +334,27 @@ def _(mo):
         z_thresh,
     )
 
+@app.cell
+def _(mo):
+    mo.md("""
+    ## Outlier Detection Controls
+
+    This section lets the user choose how abnormal values should be detected.
+
+    The available methods are:
+
+    - IQR method
+    - Z-score method
+    - Isolation Forest
+    - Local Outlier Factor
+
+    IQR and Z-score are univariate methods, meaning they inspect one variable at a time.
+    Isolation Forest and Local Outlier Factor are multivariate methods, meaning they can detect
+    unusual combinations of values.
+
+    This section adds creativity and depth because it goes beyond basic visual exploration.
+    """)
+    return
 
 @app.cell
 def _(
@@ -295,6 +446,29 @@ def _(
     ])
     return
 
+@app.cell
+def _(mo):
+    mo.md("""
+    ## Outlier Analysis Results
+
+    This section applies the selected outlier detection method and visualizes the results.
+
+    The output includes:
+
+    - Number of detected outliers
+    - Percentage of detected outliers
+    - Change in mean after removing outliers
+    - Boxplot comparing normal and abnormal observations
+    - Scatterplot showing outliers in the rent-size relationship
+    - Table of the top flagged rows
+
+    This is important because outliers can strongly affect the mean, regression slope,
+    and interpretation of rent patterns.
+
+    The analysis helps decide whether extreme rent values are real observations or values
+    that should be treated carefully in statistical interpretation.
+    """)
+    return
 
 @app.cell
 def _(PowerTransformer, df, mo, np, pd, plt, sns):
@@ -384,6 +558,31 @@ def _(PowerTransformer, df, mo, np, pd, plt, sns):
     ])
     return (df_fe,)
 
+@app.cell
+def _(mo):
+    mo.md("""
+    ## Feature Engineering
+
+    This section creates new variables from the original dataset.
+
+    New features include:
+
+    - `Rent_per_sqft`: rent divided by apartment size
+    - `Bath_per_BHK`: bathroom-to-bedroom ratio
+    - `Current_floor` and `Total_floors`: numerical values parsed from the text-based floor column
+    - `Floor_ratio`: current floor divided by total floors
+    - `Is_high_rise`: indicator for buildings with at least 10 floors
+    - `log_Rent` and `log_Size`: log-transformed variables
+    - `yj_Rent`: Yeo-Johnson transformed rent variable
+    - `Size_bucket`: categorical size groups
+
+    This section supports the data preparation requirement because it transforms raw variables
+    into more useful analytical features.
+
+    It also demonstrates procedural programming through the floor-parsing function and the use
+    of pandas for feature creation.
+    """)
+    return
 
 @app.cell
 def _(add_constant, df_fe, mo, np, pd, plt, sns, variance_inflation_factor):
@@ -423,6 +622,27 @@ def _(add_constant, df_fe, mo, np, pd, plt, sns, variance_inflation_factor):
     ])
     return
 
+@app.cell
+def _(mo):
+    mo.md("""
+    ## Correlation and Multicollinearity
+
+    This section examines relationships between numerical variables.
+
+    It includes:
+
+    - Spearman correlation heatmap
+    - Variance Inflation Factor table
+
+    Spearman correlation is used because rent data is often skewed and may contain outliers.
+    It is more robust than Pearson correlation when the relationship is not perfectly linear.
+
+    VIF checks multicollinearity. High VIF values mean that predictors are strongly related
+    to each other, which can make regression coefficients unstable.
+
+    This section supports the statistical analysis and visualization requirements.
+    """)
+    return
 
 @app.cell
 def _(df_fe, mo):
@@ -450,6 +670,23 @@ def _(df_fe, mo):
     ])
     return eda_group, eda_var
 
+@app.cell
+def _(mo):
+    mo.md("""
+    ## Deeper EDA Controls
+
+    This section lets the user choose a numerical variable and a grouping variable.
+
+    Examples of possible comparisons include:
+
+    - Rent by city
+    - Rent per square foot by furnishing status
+    - Log rent by size bucket
+    - Apartment size by area type
+
+    These controls make the exploratory analysis reusable and interactive.
+    """)
+    return
 
 @app.cell
 def _(df_fe, eda_group, eda_var, mo, pd, plt, sns, stats):
@@ -514,6 +751,32 @@ def _(df_fe, eda_group, eda_var, mo, pd, plt, sns, stats):
     ])
     return
 
+@app.cell
+def _(mo):
+    mo.md("""
+    ## Normality Tests and Group Comparison
+
+    This section performs formal statistical tests.
+
+    It includes:
+
+    - Shapiro-Wilk normality test
+    - Anderson-Darling normality test
+    - Jarque-Bera normality test
+    - Kruskal-Wallis group comparison test
+    - Histogram
+    - Q-Q plot
+    - Grouped boxplot
+
+    The normality tests check whether the selected variable follows a normal distribution.
+    The Q-Q plot gives a visual check of the same idea.
+
+    The Kruskal-Wallis test compares the selected variable across groups and reports
+    a p-value. This is useful when the data is not normally distributed.
+
+    This section strongly supports the requirement for statistical analysis with a p-value.
+    """)
+    return
 
 @app.cell
 def _(df_fe, mo, plt, sns):
@@ -554,6 +817,29 @@ def _(df_fe, mo, plt, sns):
     ])
     return
 
+@app.cell
+def _(mo):
+    mo.md("""
+    ## City-Level Summary
+
+    This section compares rent patterns across cities.
+
+    The table includes:
+
+    - Number of observations
+    - Median rent
+    - Mean rent
+    - Median apartment size
+    - Median rent per square foot
+    - Rent skewness
+
+    The rent-per-square-foot chart is useful because it adjusts for apartment size.
+    A city may have high total rent because apartments are larger, but rent per square foot
+    gives a fairer comparison.
+
+    This section helps turn the analysis into a practical real-world conclusion.
+    """)
+    return
 
 if __name__ == "__main__":
     app.run()
