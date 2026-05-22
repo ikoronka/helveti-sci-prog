@@ -584,6 +584,138 @@ def _(mo):
     """)
     return
 
+
+@app.cell
+def _(df_fe, mo, plt, sns):
+    # --- Section 2 · Rent by BHK and Furnishing Status ---------
+
+    _fig_cat, _ax_cat = plt.subplots(1, 2, figsize=(14, 5))
+
+    sns.boxplot(
+        data=df_fe,
+        x="BHK",
+        y="Rent",
+        ax=_ax_cat[0],
+    )
+    _ax_cat[0].set_title("Rent distribution by number of rooms (BHK)")
+    _ax_cat[0].set_xlabel("BHK")
+    _ax_cat[0].set_ylabel("Rent")
+
+    sns.boxplot(
+        data=df_fe,
+        x="Furnishing Status",
+        y="Rent",
+        ax=_ax_cat[1],
+    )
+    _ax_cat[1].set_title("Rent distribution by furnishing status")
+    _ax_cat[1].set_xlabel("Furnishing Status")
+    _ax_cat[1].set_ylabel("Rent")
+    _ax_cat[1].tick_params(axis="x", rotation=30)
+
+    plt.tight_layout()
+
+    mo.vstack([
+        mo.md("## Section 2 — Rent by property characteristics"),
+        mo.md(
+            "These boxplots show whether rent changes across simple, real-world housing features. "
+            "`BHK` captures apartment size/type, while `Furnishing Status` captures apartment quality or convenience."
+        ),
+        mo.as_html(_fig_cat),
+    ])
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md("""
+    ## Rent by Property Characteristics
+
+    This visualization compares rent across two important property characteristics:
+
+    - `BHK`, meaning Bedroom, Hall, and Kitchen
+    - `Furnishing Status`
+
+    The first boxplot shows how rent changes as the number of rooms increases. This helps test
+    whether larger apartment types generally have higher rent.
+
+    The second boxplot compares rent for furnished, semi-furnished, and unfurnished apartments.
+    This helps explore whether apartment condition or convenience is related to rental price.
+
+    Boxplots are useful because they show:
+
+    - The median rent
+    - The spread of rent values
+    - Possible outliers
+    - Differences between categories
+
+    Overall, this visualization helps answer whether apartment characteristics beyond size
+    and city are associated with rent.
+    """)
+    return
+
+@app.cell
+def _(df_fe, mo, plt, sns):
+    # --- Section 2 · City × BHK heatmap ------------------------
+
+    _pivot_city_bhk = df_fe.pivot_table(
+        values="Rent",
+        index="City",
+        columns="BHK",
+        aggfunc="median",
+    )
+
+    _fig_heat, _ax_heat = plt.subplots(figsize=(10, 6))
+
+    sns.heatmap(
+        _pivot_city_bhk,
+        annot=True,
+        fmt=".0f",
+        ax=_ax_heat,
+    )
+
+    _ax_heat.set_title("Median rent by city and BHK")
+    _ax_heat.set_xlabel("BHK")
+    _ax_heat.set_ylabel("City")
+
+    plt.tight_layout()
+
+    mo.vstack([
+        mo.md("## Section 2 — Median rent by city and BHK"),
+        mo.md(
+            "This heatmap combines location and apartment size. "
+            "It helps identify which cities are most expensive for each BHK category."
+        ),
+        mo.as_html(_fig_heat),
+    ])
+    return
+
+@app.cell
+def _(mo):
+    mo.md("""
+    ## Median Rent by City and BHK
+
+    This visualization uses a heatmap to compare median rent across two variables:
+
+    - `City`
+    - `BHK`, meaning Bedroom, Hall, and Kitchen
+
+    The heatmap is based on a pivot table where each row represents a city and each column
+    represents a BHK category. Each cell shows the median rent for that city and apartment type.
+
+    This makes it easier to compare rent patterns across locations while also considering
+    apartment size. For example, it can show whether a 2 BHK apartment is more expensive in
+    one city than another.
+
+    Median rent is used instead of mean rent because rent data often contains extreme values.
+    The median is less affected by very high or very low rents and gives a more stable summary
+    of typical rental prices.
+
+    Overall, this heatmap helps identify which city and apartment-size combinations are the
+    most expensive or most affordable.
+    """)
+    return
+
+
 @app.cell
 def _(add_constant, df_fe, mo, np, pd, plt, sns, variance_inflation_factor):
     # --- Section 2 · VIF + correlation -------------------------------------------
