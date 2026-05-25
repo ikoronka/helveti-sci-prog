@@ -39,7 +39,6 @@ class LLMService:
     It should be stored locally as an environment variable.
     """
     def __init__(self):
-        # The SDK automatically looks for GEMINI_API_KEY environment variable
         self.client = genai.Client(api_key=os.environ.get("GOOGLE_API_KEY"))
 
     def generate_conclusion(self, corr, p_value):
