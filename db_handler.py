@@ -11,7 +11,7 @@ Main responsibilities:
 
 Rubric relevance:
 - Collection of real-world data
-- Data preparation using regular expressions
+- Data preparation using regular expressions (decimal-safe: `r"[^0-9.]"`)
 - Use of pandas DataFrames
 - Use of a database, SQLite
 - Use of SQL queries in Python code
@@ -43,7 +43,8 @@ class HouseRentDatabase:
         df = pd.read_csv(csv_path)
 
         # Clean Size column
-        df["Size"] = df["Size"].astype(str).apply(lambda x: re.sub(r"[^0-9]", "", x))
+        # r"[^0-9.]" preserves decimal points so "45.5 sqft" → 45.5, not 455
+        df["Size"] = df["Size"].astype(str).apply(lambda x: re.sub(r"[^0-9.]", "", x))
         df["Size"] = pd.to_numeric(df["Size"])
 
         # Save to SQLite
